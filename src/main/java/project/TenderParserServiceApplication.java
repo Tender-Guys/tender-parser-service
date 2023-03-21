@@ -10,4 +10,5 @@ public class TenderParserServiceApplication {
 		SpringApplication.run(TenderParserServiceApplication.class, args);
 	}
 
+	// empty comment for test commit - delete it!
 }
