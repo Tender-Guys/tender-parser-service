@@ -1,4 +1,4 @@
-package project.model;
+package project.model.dao;
 
 import java.sql.Timestamp;
 
