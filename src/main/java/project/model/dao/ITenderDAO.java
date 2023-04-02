@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ITenderDAO<T> {
-    Optional<T> get(long id);
+    Optional<T> getByID(String id);
     List<T> getAll();
 
     void save(T t);
