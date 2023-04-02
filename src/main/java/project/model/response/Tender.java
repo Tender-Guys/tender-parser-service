@@ -1,4 +1,4 @@
-package project.model.dao;
+package project.model.response;
 
 import java.sql.Timestamp;
 
@@ -82,80 +82,4 @@ public class Tender {
     // add HashCode and Equals
     // add Comparable interface
 }
-
-class Site {
-    private int id;
-    private String name;
-    private String url;
-
-    public Site() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-}
-
-class Initiator {
-    private int id;
-    private String name;
-    private String contactName;
-    private String contactPhone;
-
-    public Initiator() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getContactName() {
-        return contactName;
-    }
-
-    public void setContactName(String contactName) {
-        this.contactName = contactName;
-    }
-
-    public String getContactPhone() {
-        return contactPhone;
-    }
-
-    public void setContactPhone(String contactPhone) {
-        this.contactPhone = contactPhone;
-    }
-}
-
 
