@@ -1,6 +1,5 @@
 package project.model.response;
 
-
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
@@ -10,6 +9,7 @@ import java.util.Objects;
 @Table(schema = "tendersdb", name = "tenders")
 public class Tender {
     @Id
+    @Column(name = "tender_id")
     private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)

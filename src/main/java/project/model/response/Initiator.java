@@ -11,6 +11,7 @@ import java.util.Objects;
 @Table(schema = "tendersdb", name = "tender_initiators")
 public class Initiator {
     @Id
+    @Column(name = "tender_initiator_id")
     private Integer id;
 
     @Column(name = "tender_initiator_name")
