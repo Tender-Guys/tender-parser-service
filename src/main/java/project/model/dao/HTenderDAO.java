@@ -11,7 +11,7 @@ import java.util.Optional;
 public class HTenderDAO implements ITenderDAO<Tender> {
 
     @Override
-    public Optional<Tender> getByID(String id) {
+    public Optional<Tender> getTenderByID(String id) {
         try(Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(Tender.class, id));
         } catch (HibernateException e) {
@@ -28,16 +28,28 @@ public class HTenderDAO implements ITenderDAO<Tender> {
 
     @Override
     public void save(Tender tender) {
-
+        try(Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            session.persist(tender);
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void update(Tender tender, String[] params) {
-
+    public void update(Tender tender) {
+        try(Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            session.merge(tender);
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void remove(Tender tender) {
-
+        try(Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            session.remove(tender);
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
     }
 }

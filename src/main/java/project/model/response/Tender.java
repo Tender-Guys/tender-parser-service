@@ -57,6 +57,61 @@ public class Tender {
         this.url = url;
     }
 
+    public static class Builder {
+        private Integer id;
+        private Site site;
+        private String siteInnerId;
+        private Initiator initiator;
+        private String subject;
+        private Timestamp startTimestamp;
+        private Timestamp endTimestamp;
+        private String url;
+
+        public Builder withId(Integer id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withSite(Site site) {
+            this.site = site;
+            return this;
+        }
+
+        public Builder withSiteInnerId(String siteInnerId) {
+            this.siteInnerId = siteInnerId;
+            return this;
+        }
+
+        public Builder withInitiator(Initiator initiator) {
+            this.initiator = initiator;
+            return this;
+        }
+
+        public Builder withSubject(String subject) {
+            this.subject = subject;
+            return this;
+        }
+
+        public Builder withStartTimestamp(Timestamp startTimestamp) {
+            this.startTimestamp = startTimestamp;
+            return this;
+        }
+
+        public Builder withEndTimestamp(Timestamp endTimestamp) {
+            this.endTimestamp = endTimestamp;
+            return this;
+        }
+
+        public Builder withUrl(String url) {
+            this.url = url;
+            return this;
+        }
+
+        public Tender build() {
+            return new Tender(id, site, siteInnerId, initiator, subject, startTimestamp, endTimestamp, url);
+        }
+    }
+
     public Integer getId() {
         return id;
     }

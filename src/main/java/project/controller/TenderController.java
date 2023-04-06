@@ -15,8 +15,8 @@ public class TenderController {
     }
 
     @GetMapping("/")
-    public String getSomeResponse() {
-        return service.getSomeResponse();
+    public String getTenderList() {
+        return service.getTenderDAOList().toString();
     }
 
     @GetMapping(path = "/{id}")

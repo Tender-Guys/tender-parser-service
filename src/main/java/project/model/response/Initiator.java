@@ -34,6 +34,37 @@ public class Initiator {
         this.contactPhone = contactPhone;
     }
 
+    public static class Builder {
+        private Integer id;
+        private String name;
+        private String contactName;
+        private String contactPhone;
+
+        public Builder withId(Integer id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder withContactName(String contactName) {
+            this.contactName = contactName;
+            return this;
+        }
+
+        public Builder withContactPhone(String contactPhone) {
+            this.contactPhone = contactPhone;
+            return this;
+        }
+
+        public Initiator build() {
+            return new Initiator(id, name, contactName, contactPhone);
+        }
+    }
+
     public Integer getId() {
         return id;
     }

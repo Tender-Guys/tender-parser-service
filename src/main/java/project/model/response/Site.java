@@ -30,6 +30,31 @@ public class Site {
         this.url = url;
     }
 
+    public static class Builder {
+        private Integer id;
+        private String name;
+        private String url;
+
+        public Builder withId(Integer id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder withUrl(String url) {
+            this.url = url;
+            return this;
+        }
+
+        public Site build() {
+            return new Site(id, name, url);
+        }
+    }
+
     public Integer getId() {
         return id;
     }
@@ -75,6 +100,8 @@ public class Site {
                 ", url='" + url + '\'' +
                 '}';
     }
+
+
 }
 
 
