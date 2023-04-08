@@ -1,7 +1,11 @@
 package project.model.dao;
 
+import jakarta.persistence.EntityManager;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
+import project.model.response.Initiator;
+import project.model.response.Site;
 import project.model.response.Tender;
 import project.util.HibernateSessionFactoryUtil;
 
@@ -29,7 +33,9 @@ public class HTenderDAO implements ITenderDAO<Tender> {
     @Override
     public void save(Tender tender) {
         try(Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
             session.persist(tender);
+            transaction.commit();
         } catch (HibernateException e) {
             e.printStackTrace();
         }

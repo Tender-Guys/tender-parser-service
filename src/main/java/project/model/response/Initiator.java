@@ -1,16 +1,16 @@
 package project.model.response;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(schema = "tendersdb", name = "tender_initiators")
 public class Initiator {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tender_initiator_id")
     private Integer id;
 
@@ -22,6 +22,9 @@ public class Initiator {
 
     @Column(name = "tender_initiator_contact_phone")
     private String contactPhone;
+
+    @OneToMany(mappedBy = "initiator", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Tender> tenders = new HashSet<>();
 
     public Initiator() {
         //Empty constructor

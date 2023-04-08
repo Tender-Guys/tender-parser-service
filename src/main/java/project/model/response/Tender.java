@@ -1,6 +1,7 @@
 package project.model.response;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
 
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -9,17 +10,20 @@ import java.util.Objects;
 @Table(schema = "tendersdb", name = "tenders")
 public class Tender {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tender_id")
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JoinColumn(name = "tender_site_id")
     private Site site;
 
     @Column(name = "tender_site_inner_id")
     private String siteInnerId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JoinColumn(name = "tender_initiator_id")
     private Initiator initiator;
 

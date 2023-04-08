@@ -96,4 +96,8 @@ public class TenderService {
                 ? tenderOpt.get().toString()
                 : String.format("There is no tender with ID = %s in DB", id);
     }
+
+    public void postTenderToDBByPositionInList(String id) {
+        dao.save(getTenderDAOList().get(Integer.parseInt(id)));
+    }
 }
