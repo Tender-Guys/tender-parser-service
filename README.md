@@ -7,10 +7,12 @@ The service monitors the presence of tenders with a match in the subject name an
 
 
 # Used
-Java 11
+Java 17
 
-Spring Boot
+Spring Boot 6
 
 Hibernate
 
 MySQL
+
+TelegramAPI
