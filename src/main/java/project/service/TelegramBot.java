@@ -51,6 +51,8 @@ public class TelegramBot extends TelegramLongPollingBot {
                 case "/start" -> {
 
                     try {
+                        registerUserToDB(update);
+                        log.info("Data about a user added to DB");
                         sendStartMessage(chatId);
                         log.info("Welcome message was sent to user " + userName);
                     } catch (TelegramApiException e) {
@@ -203,5 +205,17 @@ public class TelegramBot extends TelegramLongPollingBot {
         keyboardMarkup.setKeyboard(keyboardRows);
 
         return keyboardMarkup;
+    }
+
+    /**
+     * Method which registers a user to DB after '/start' command
+     */
+    void registerUserToDB(Update update) {
+        String userFirstName = update.getMessage().getChat().getFirstName();
+        String userLastName = update.getMessage().getChat().getLastName();
+        String userName = update.getMessage().getChat().getUserName();
+        long userChatID = update.getMessage().getChatId();
+
+        // TODO: 15.04.2023 realise adding this Data about a user to DB during 'start' command
     }
 }
