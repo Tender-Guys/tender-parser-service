@@ -1,20 +1,23 @@
 package project.model.response;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.NaturalId;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(schema = "tendersdb", name = "tender_initiators")
-public class Initiator {
+@Table(name = "tender_initiators")
+public class Initiator implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tender_initiator_id")
     private Integer id;
 
-    @Column(name = "tender_initiator_name")
+    @NaturalId(mutable = true)
+    @Column(name = "tender_initiator_name", nullable = false, unique = true)
     private String name;
 
     @Column(name = "tender_initiator_contact_name")
@@ -25,6 +28,11 @@ public class Initiator {
 
     @OneToMany(mappedBy = "initiator", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Tender> tenders = new HashSet<>();
+
+    public void addTender(Tender tender) {
+        tenders.add(tender);
+        tender.setInitiator(this);
+    }
 
     public Initiator() {
         //Empty constructor
@@ -105,12 +113,12 @@ public class Initiator {
         if (this == o) return true;
         if (!(o instanceof Initiator)) return false;
         Initiator initiator = (Initiator) o;
-        return Objects.equals(id, initiator.id) && Objects.equals(name, initiator.name) && Objects.equals(contactName, initiator.contactName) && Objects.equals(contactPhone, initiator.contactPhone);
+        return Objects.equals(name, initiator.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, contactName, contactPhone);
+        return Objects.hash(name);
     }
 
     @Override

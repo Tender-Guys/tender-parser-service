@@ -1,14 +1,16 @@
 package project.model.response;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.NaturalId;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(schema = "tendersdb", name = "tender_sites")
-public class Site {
+@Table(name = "tender_sites")
+public class Site implements Serializable {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column(name = "tender_site_id")
@@ -17,11 +19,17 @@ public class Site {
     @Column(name = "tender_site_name")
     private String name;
 
-    @Column(name = "tender_site_home_url")
+    @NaturalId(mutable = true)
+    @Column(name = "tender_site_home_url", nullable = false, unique = true)
     private String url;
 
     @OneToMany(mappedBy = "site", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Tender> tenders = new HashSet<>();
+
+    public void addTender(Tender tender) {
+        tenders.add(tender);
+        tender.setSite(this);
+    }
 
     public Site() {
         //Empty constructor
@@ -87,12 +95,12 @@ public class Site {
         if (this == o) return true;
         if (!(o instanceof Site)) return false;
         Site site = (Site) o;
-        return Objects.equals(id, site.id) && Objects.equals(name, site.name) && Objects.equals(url, site.url);
+        return Objects.equals(url, site.url);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, url);
+        return Objects.hash(url);
     }
 
     @Override

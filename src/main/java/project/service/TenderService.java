@@ -63,20 +63,26 @@ public class TenderService {
     }
 
     private static Tender mapTenderDtoToDao(project.model.dto.smarttender.Tender dto) {
-        return new Tender.Builder()
-                .withSite(new Site.Builder()
-                        .withName("SmartTender")
-                        .withUrl("https://smarttender.biz")
-                        .build())
+        Site site = new Site.Builder()
+                .withName("SmartTender")
+                .withUrl("https://smarttender.bizzz")
+                .build();
+
+        Initiator initiator = new Initiator.Builder()
+                .withName(dto.getOrganizer().getTitle())
+                .build();
+
+        Tender tender = new Tender.Builder()
                 .withSiteInnerId(dto.getNumber())
-                .withInitiator(new Initiator.Builder()
-                        .withName(dto.getOrganizer().getTitle())
-                        .build())
+                .withSite(site)
+                .withInitiator(initiator)
                 .withSubject(dto.getSubject())
                 .withStartTimestamp(Timestamp.valueOf(dto.getTenderingPeriod().getDateStart().replace('T', ' ')))
                 .withEndTimestamp(Timestamp.valueOf(dto.getTenderingPeriod().getDateEnd().replace('T', ' ')))
                 .withUrl("https://smarttender.biz/komertsiyni-torgy/" + dto.getId() + "/")
                 .build();
+
+        return tender;
     }
 
     private SmarttenderDTO getSmarttenderDTOByPage(int page) {
@@ -99,5 +105,10 @@ public class TenderService {
 
     public void postTenderToDBByPositionInList(String id) {
         dao.save(getTenderDAOList().get(Integer.parseInt(id)));
+    }
+
+    public void deleteTenderFromDBByID(String id) {
+        Tender tender = dao.getTenderByID(id).get();
+        dao.remove(tender);
     }
 }

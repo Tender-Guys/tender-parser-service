@@ -1,30 +1,28 @@
 package project.model.response;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.Cascade;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-@Table(schema = "tendersdb", name = "tenders")
-public class Tender {
+@Table(name = "tenders")
+public class Tender implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tender_id")
     private Integer id;
 
-    @ManyToOne
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    @JoinColumn(name = "tender_site_id")
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "tender_site_id", nullable = false)
     private Site site;
 
     @Column(name = "tender_site_inner_id")
     private String siteInnerId;
 
-    @ManyToOne
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    @JoinColumn(name = "tender_initiator_id")
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "tender_initiator_id", nullable = false)
     private Initiator initiator;
 
     @Column(name = "tender_subject")
@@ -36,7 +34,7 @@ public class Tender {
     @Column(name = "tender_end_time")
     private Timestamp endTimestamp;
 
-    @Column(name = "tender_url")
+    @Column(name = "tender_url", nullable = false, unique = true)
     private String url;
 
     public Tender() {

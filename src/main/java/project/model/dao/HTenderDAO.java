@@ -1,9 +1,7 @@
 package project.model.dao;
 
-import jakarta.persistence.EntityManager;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import project.model.response.Initiator;
 import project.model.response.Site;
 import project.model.response.Tender;
@@ -33,9 +31,23 @@ public class HTenderDAO implements ITenderDAO<Tender> {
     @Override
     public void save(Tender tender) {
         try(Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
+
+            Site existingSite = (Site) session.byNaturalId(Site.class)
+                    .using("url", tender.getSite().getUrl())
+                    .load();
+            if (existingSite != null)
+                tender.setSite(existingSite);
+
+            Initiator existingInit = (Initiator) session.byNaturalId(Initiator.class)
+                    .using("name", tender.getInitiator().getName())
+                    .load();
+            if (existingInit != null)
+                tender.setInitiator(existingInit);
+
+            session.getTransaction().begin();
             session.persist(tender);
-            transaction.commit();
+            session.getTransaction().commit();
+
         } catch (HibernateException e) {
             e.printStackTrace();
         }
@@ -53,7 +65,9 @@ public class HTenderDAO implements ITenderDAO<Tender> {
     @Override
     public void remove(Tender tender) {
         try(Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            session.getTransaction().begin();
             session.remove(tender);
+            session.getTransaction().commit();
         } catch (HibernateException e) {
             e.printStackTrace();
         }
