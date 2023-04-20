@@ -44,10 +44,14 @@ public class HTenderDAO implements ITenderDAO<Tender> {
             if (existingInit != null)
                 tender.setInitiator(existingInit);
 
-            session.getTransaction().begin();
-            session.persist(tender);
-            session.getTransaction().commit();
-
+            Tender existingTender = (Tender) session.byNaturalId(Tender.class)
+                    .using("url", tender.getUrl())
+                    .load();
+            if (existingTender == null) {
+                session.getTransaction().begin();
+                session.persist(tender);
+                session.getTransaction().commit();
+            }
         } catch (HibernateException e) {
             e.printStackTrace();
         }

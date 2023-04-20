@@ -1,9 +1,11 @@
 package project.model.response;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.NaturalId;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -29,11 +31,12 @@ public class Tender implements Serializable {
     private String subject;
 
     @Column(name = "tender_start_time")
-    private Timestamp startTimestamp;
+    private LocalDateTime startTimestamp;
 
     @Column(name = "tender_end_time")
-    private Timestamp endTimestamp;
+    private LocalDateTime endTimestamp;
 
+    @NaturalId(mutable = true)
     @Column(name = "tender_url", nullable = false, unique = true)
     private String url;
 
@@ -46,8 +49,8 @@ public class Tender implements Serializable {
                   String siteInnerId,
                   Initiator initiator,
                   String subject,
-                  Timestamp startTimestamp,
-                  Timestamp endTimestamp,
+                  LocalDateTime startTimestamp,
+                  LocalDateTime endTimestamp,
                   String url) {
         this.id = id;
         this.site = site;
@@ -65,8 +68,8 @@ public class Tender implements Serializable {
         private String siteInnerId;
         private Initiator initiator;
         private String subject;
-        private Timestamp startTimestamp;
-        private Timestamp endTimestamp;
+        private LocalDateTime startTimestamp;
+        private LocalDateTime endTimestamp;
         private String url;
 
         public Builder withId(Integer id) {
@@ -94,12 +97,12 @@ public class Tender implements Serializable {
             return this;
         }
 
-        public Builder withStartTimestamp(Timestamp startTimestamp) {
+        public Builder withStartTimestamp(LocalDateTime startTimestamp) {
             this.startTimestamp = startTimestamp;
             return this;
         }
 
-        public Builder withEndTimestamp(Timestamp endTimestamp) {
+        public Builder withEndTimestamp(LocalDateTime endTimestamp) {
             this.endTimestamp = endTimestamp;
             return this;
         }
@@ -154,19 +157,19 @@ public class Tender implements Serializable {
         this.subject = subject;
     }
 
-    public Timestamp getStartTimestamp() {
+    public LocalDateTime getStartTimestamp() {
         return startTimestamp;
     }
 
-    public void setStartTimestamp(Timestamp startTimestamp) {
+    public void setStartTimestamp(LocalDateTime startTimestamp) {
         this.startTimestamp = startTimestamp;
     }
 
-    public Timestamp getEndTimestamp() {
+    public LocalDateTime getEndTimestamp() {
         return endTimestamp;
     }
 
-    public void setEndTimestamp(Timestamp endTimestamp) {
+    public void setEndTimestamp(LocalDateTime endTimestamp) {
         this.endTimestamp = endTimestamp;
     }
 

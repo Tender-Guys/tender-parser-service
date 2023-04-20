@@ -10,8 +10,8 @@ import project.model.response.Initiator;
 import project.model.response.Site;
 import project.model.response.Tender;
 
-import java.sql.Timestamp;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -77,8 +77,8 @@ public class TenderService {
                 .withSite(site)
                 .withInitiator(initiator)
                 .withSubject(dto.getSubject())
-                .withStartTimestamp(Timestamp.valueOf(dto.getTenderingPeriod().getDateStart().replace('T', ' ')))
-                .withEndTimestamp(Timestamp.valueOf(dto.getTenderingPeriod().getDateEnd().replace('T', ' ')))
+                .withStartTimestamp(LocalDateTime.parse(dto.getTenderingPeriod().getDateStart()))
+                .withEndTimestamp(LocalDateTime.parse(dto.getTenderingPeriod().getDateEnd()))
                 .withUrl("https://smarttender.biz/komertsiyni-torgy/" + dto.getId() + "/")
                 .build();
 
@@ -104,6 +104,12 @@ public class TenderService {
     }
 
     public void postTenderToDBByPositionInList(String id) {
+//        TODO delete it after corect program
+//        test loop for filling DB
+//
+//        for (Tender tender : getTenderDAOList()) {
+//            dao.save(tender);
+//        }
         dao.save(getTenderDAOList().get(Integer.parseInt(id)));
     }
 
