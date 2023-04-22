@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.NaturalId;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Objects;
 

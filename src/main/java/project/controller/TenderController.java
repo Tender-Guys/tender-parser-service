@@ -13,21 +13,27 @@ public class TenderController {
     }
 
     @GetMapping("/")
-    public String getTenderList() {
-        return service.getTenderDAOList().toString();
+    public String updateTenderDB() {
+        return service.updateTenderDB();
     }
-
 
     @GetMapping(path = "/{id}")
     public String getTenderFromDBByID(@PathVariable String id) {
         return service.getTenderFromDBByID(id);
     }
 
-    @PostMapping(path = "/{id}")
-    public void postTenderToDBByPositionInList(@PathVariable String id) {
-        service.postTenderToDBByPositionInList(id);
+    @GetMapping(path = "/all")
+    public String getAllTendersFromDB() {
+        return service.getAllTendersFromDB();
     }
 
     @DeleteMapping(path = "/{id}")
-    public void deleteTenderFromDBByID(@PathVariable String id) { service.deleteTenderFromDBByID(id); }
+    public String removeTenderFromDBByID(@PathVariable String id) {
+        return service.removeTenderFromDBByID(id);
+    }
+
+    @DeleteMapping(path = "/all")
+    public String removeAllTendersFromDB() {
+        return service.removeAllTendersFromDB();
+    }
 }
