@@ -96,7 +96,8 @@ public class HTenderDAO implements ITenderDAO {
 
     @Override
     public void updateById(Integer id, Tender tender) {
-
+        tender.setId(id);
+        update(tender);
     }
 
     @Override
