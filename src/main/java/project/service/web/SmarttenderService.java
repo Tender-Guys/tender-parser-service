@@ -15,8 +15,11 @@ public class SmarttenderService implements IWebService {
     private List<Tender> tenderList;
     private List<Tender> onlyNewTenderList;
     private final String SMARTTENDER_NAME = "SmartTender";
-    private final String SMARTTENDER_HOME_URL = "https://smarttender.biz";
-    private final String BASE_URL = "https://smarttender.biz/CommercialTrades/GetTenders/";
+    private final String BASE_URL = "https://smarttender.biz";
+    private final String PARSING_ENDPOINT = BASE_URL + "/CommercialTrades/GetTenders/";
+    private final String TENDER_URL = BASE_URL + "/komertsiyni-torgy/%s/";
+
+
     private final Duration DURATION_TIMEOUT = Duration.ofSeconds(3);
     private final WebClient webClient;
     private final String BODY_VALUE =
@@ -47,7 +50,7 @@ public class SmarttenderService implements IWebService {
         tenderList = new ArrayList<>();
         onlyNewTenderList = new ArrayList<>();
         webClient = WebClient.builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(PARSING_ENDPOINT)
                 .build();
     }
 
@@ -90,7 +93,7 @@ public class SmarttenderService implements IWebService {
         for (Tender dto : tenders) {
             Site site = new Site.Builder()
                     .withName(SMARTTENDER_NAME)
-                    .withUrl(SMARTTENDER_HOME_URL)
+                    .withUrl(BASE_URL)
                     .build();
             Initiator initiator = new Initiator.Builder()
                     .withName(dto.getOrganizer().getTitle())
@@ -102,7 +105,7 @@ public class SmarttenderService implements IWebService {
                     .withSubject(dto.getSubject())
                     .withStartTimestamp(LocalDateTime.parse(dto.getTenderingPeriod().getDateStart()))
                     .withEndTimestamp(LocalDateTime.parse(dto.getTenderingPeriod().getDateEnd()))
-                    .withUrl("https://smarttender.biz/komertsiyni-torgy/" + dto.getId() + "/")
+                    .withUrl(String.format(TENDER_URL, dto.getId()))
                     .build();
             tenderList.add(tender);
         }
