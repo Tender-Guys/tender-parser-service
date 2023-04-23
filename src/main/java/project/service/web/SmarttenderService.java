@@ -58,9 +58,11 @@ public class SmarttenderService implements IWebService {
         int page = 1;
         while (tenders.addAll(getSmarttenderDTOByPage(page++).getTenders()));
         tenders.removeAll(tenderList);
-        onlyNewTenderList = tenders;
+        onlyNewTenderList.clear();
+        onlyNewTenderList.addAll(tenders);
         tenders.addAll(tenderList);
-        tenderList = tenders;
+        tenderList.clear();
+        tenderList.addAll(tenders);
     }
 
     private SmarttenderDTO getSmarttenderDTOByPage(int page) {
