@@ -2,7 +2,6 @@ package project.model.dto.smarttender;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -18,7 +17,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "DateEndTitle"
 })
 public class TenderingPeriod {
-
     @JsonProperty("DateStart")
     private String dateStart;
     @JsonProperty("DateStartTitle")
@@ -91,4 +89,3 @@ public class TenderingPeriod {
                 '}';
     }
 }
-

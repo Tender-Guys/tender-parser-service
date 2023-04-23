@@ -1,20 +1,18 @@
 package project.model.dao;
 
-import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import project.model.response.Initiator;
 import project.model.response.Site;
+import project.model.response.Initiator;
 import project.model.response.Tender;
 import project.util.HibernateSessionFactoryUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class HTenderDAO implements ITenderDAO {
+
     @Override
     public Tender getByID(Integer id) {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
@@ -22,20 +20,19 @@ public class HTenderDAO implements ITenderDAO {
         } catch (HibernateException e) {
             e.printStackTrace();
         }
-        return null;
+        return new Tender();
     }
 
     @Override
     public List<Tender> getAll() {
         List<Tender> tenderList = new ArrayList<>();
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
-            CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<Tender> cq = cb.createQuery(Tender.class);
+            CriteriaQuery<Tender> cq = session.getCriteriaBuilder()
+                                              .createQuery(Tender.class);
             Root<Tender> rootEntry = cq.from(Tender.class);
             CriteriaQuery<Tender> all = cq.select(rootEntry);
-
-            TypedQuery<Tender> allQuery = session.createQuery(all);
-            tenderList = allQuery.getResultList();
+            tenderList = session.createQuery(all)
+                                .getResultList();
         } catch (HibernateException e) {
             e.printStackTrace();
         }
@@ -45,21 +42,19 @@ public class HTenderDAO implements ITenderDAO {
     @Override
     public Boolean add(Tender tender) {
         Boolean isAdded = false;
-
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
-
             Site existingSite = (Site) session.byNaturalId(Site.class)
                     .using("url", tender.getSite().getUrl())
                     .load();
-            if (existingSite != null)
+            if (existingSite != null) {
                 tender.setSite(existingSite);
-
+            }
             Initiator existingInit = (Initiator) session.byNaturalId(Initiator.class)
                     .using("name", tender.getInitiator().getName())
                     .load();
-            if (existingInit != null)
+            if (existingInit != null) {
                 tender.setInitiator(existingInit);
-
+            }
             Tender existingTender = (Tender) session.byNaturalId(Tender.class)
                     .using("url", tender.getUrl())
                     .load();
@@ -72,7 +67,6 @@ public class HTenderDAO implements ITenderDAO {
         } catch (HibernateException e) {
             e.printStackTrace();
         }
-
         return isAdded;
     }
 
@@ -105,7 +99,6 @@ public class HTenderDAO implements ITenderDAO {
         if (getByID(tender.getId()) == null) {
             return false;
         }
-
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             session.getTransaction().begin();
             session.remove(tender);
@@ -113,7 +106,6 @@ public class HTenderDAO implements ITenderDAO {
         } catch (HibernateException e) {
             e.printStackTrace();
         }
-
         return true;
     }
 
@@ -134,7 +126,8 @@ public class HTenderDAO implements ITenderDAO {
 
     @Override
     public void removeAll() {
-        for (Tender tender : getAll())
+        for (Tender tender : getAll()) {
             remove(tender);
+        }
     }
 }

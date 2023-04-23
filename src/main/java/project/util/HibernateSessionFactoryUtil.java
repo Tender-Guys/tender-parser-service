@@ -10,8 +10,8 @@ import project.model.response.Site;
 import project.model.response.Tender;
 
 public class HibernateSessionFactoryUtil {
-
     private static SessionFactory sessionFactory;
+
     private HibernateSessionFactoryUtil() {}
 
     public static SessionFactory getSessionFactory() {
@@ -24,21 +24,16 @@ public class HibernateSessionFactoryUtil {
     private static void createSessionFactory() {
         try {
             Configuration configuration = new Configuration().configure();
-
             configuration.addAnnotatedClass(Tender.class)
                          .addAnnotatedClass(Initiator.class)
                          .addAnnotatedClass(Site.class);
-
             StandardServiceRegistry builder = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties())
                     .build();
-
             sessionFactory = configuration.buildSessionFactory(builder);
-
         } catch (HibernateException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
-
 }

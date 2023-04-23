@@ -2,7 +2,6 @@ package project.model.response;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.NaturalId;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -14,33 +13,25 @@ public class Tender implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tender_id")
     private Integer id;
-
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "tender_site_id", nullable = false)
     private Site site;
-
     @Column(name = "tender_site_inner_id")
     private String siteInnerId;
-
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "tender_initiator_id", nullable = false)
     private Initiator initiator;
-
     @Column(name = "tender_subject")
     private String subject;
-
     @Column(name = "tender_start_time")
     private LocalDateTime startTimestamp;
-
     @Column(name = "tender_end_time")
     private LocalDateTime endTimestamp;
-
     @NaturalId(mutable = true)
     @Column(name = "tender_url", nullable = false, unique = true)
     private String url;
 
     public Tender() {
-        //Empty constructor
     }
 
     public Tender(Integer id,
@@ -207,4 +198,3 @@ public class Tender implements Serializable {
                 '}';
     }
 }
-

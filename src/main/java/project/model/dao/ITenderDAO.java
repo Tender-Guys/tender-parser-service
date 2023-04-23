@@ -7,7 +7,6 @@ import java.util.List;
 public interface ITenderDAO {
     Tender getByID(Integer id);
     List<Tender> getAll();
-
     Boolean add(Tender tender);
     Boolean addAll(List<Tender> tenderList);
     void update(Tender tender);

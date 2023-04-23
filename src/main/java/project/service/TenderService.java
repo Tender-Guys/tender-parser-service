@@ -5,7 +5,6 @@ import project.configuration.Configuration;
 import project.model.dao.ITenderDAO;
 import project.model.response.Tender;
 import project.service.web.IWebService;
-
 import java.util.List;
 import java.util.stream.Collectors;
 

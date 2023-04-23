@@ -1,7 +1,6 @@
 package project.model.dto.smarttender;
 
 import com.fasterxml.jackson.annotation.*;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -15,7 +14,6 @@ import java.util.Map;
         "Address"
 })
 public class Organizer {
-
     @JsonProperty("Id")
     private Integer id;
     @JsonProperty("Title")

@@ -1,7 +1,6 @@
 package project.model.dto.smarttender;
 
 import com.fasterxml.jackson.annotation.*;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -16,7 +15,6 @@ import java.util.Map;
         "CurrencyId"
 })
 public class InitialRate {
-
     @JsonProperty("Amount")
     private Double amount;
     @JsonProperty("AmountTitle")

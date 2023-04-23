@@ -17,7 +17,9 @@
 	<description>Pet project #1</description>
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
+		<hibernateCore.version>6.1.7.Final</hibernateCore.version>
+		<MySQLConnector.version>8.0.32</MySQLConnector.version>
 	</properties>
 
 	<dependencies>
@@ -40,13 +42,13 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>6.1.7.Final</version>
+			<version>${hibernateCore.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
-			<version>8.0.32</version>
+			<version>${MySQLConnector.version}</version>
 		</dependency>
 	</dependencies>
 

@@ -1,7 +1,6 @@
 package project.model.dto.smarttender;
 
 import com.fasterxml.jackson.annotation.*;
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +16,6 @@ import java.util.Map;
         "ShowIdentificationMessage"
 })
 public class SmarttenderDTO {
-
     @JsonProperty("TotalCount")
     private Integer totalCount;
     @JsonProperty("TotalCountInAnotherSegment")

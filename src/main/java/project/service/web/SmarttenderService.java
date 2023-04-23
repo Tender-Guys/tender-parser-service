@@ -3,19 +3,19 @@ package project.service.web;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 import project.model.dto.smarttender.SmarttenderDTO;
+import project.model.dto.smarttender.Tender;
 import project.model.response.Initiator;
 import project.model.response.Site;
-import project.model.response.Tender;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SmarttenderService implements IWebService {
-    private List<project.model.dto.smarttender.Tender> tenderList;
-    private List<project.model.dto.smarttender.Tender> onlyNewTenderList;
-
+    private List<Tender> tenderList;
+    private List<Tender> onlyNewTenderList;
+    private final String SMARTTENDER_NAME = "SmartTender";
+    private final String SMARTTENDER_HOME_URL = "https://smarttender.biz";
     private final String BASE_URL = "https://smarttender.biz/CommercialTrades/GetTenders/";
     private final Duration DURATION_TIMEOUT = Duration.ofSeconds(3);
     private final WebClient webClient;
@@ -53,14 +53,11 @@ public class SmarttenderService implements IWebService {
 
     @Override
     public void updateTenderList() {
-        List<project.model.dto.smarttender.Tender> tenders = new ArrayList<>();
-
+        List<Tender> tenders = new ArrayList<>();
         int page = 1;
         while (tenders.addAll(getSmarttenderDTOByPage(page++).getTenders()));
-
         tenders.removeAll(tenderList);
         onlyNewTenderList = tenders;
-
         tenders.addAll(tenderList);
         tenderList = tenders;
     }
@@ -77,31 +74,28 @@ public class SmarttenderService implements IWebService {
     }
 
     @Override
-    public List<Tender> getTenderList() {
+    public List<project.model.response.Tender> getTenderList() {
         updateTenderList();
         return mapToTender(tenderList);
     }
 
     @Override
-    public List<Tender> getOnlyNewTenderList() {
+    public List<project.model.response.Tender> getOnlyNewTenderList() {
         updateTenderList();
         return mapToTender(onlyNewTenderList);
     }
 
-    //TODO correct method. It has many mistakes.
-    private List<Tender> mapToTender(List<project.model.dto.smarttender.Tender> tenders) {
-        List<Tender> tenderList = new ArrayList<>();
-        for (project.model.dto.smarttender.Tender dto : tenders) {
+    private List<project.model.response.Tender> mapToTender(List<Tender> tenders) {
+        List<project.model.response.Tender> tenderList = new ArrayList<>();
+        for (Tender dto : tenders) {
             Site site = new Site.Builder()
-                    .withName("SmartTender")
-                    .withUrl("https://smarttender.bizzz")
+                    .withName(SMARTTENDER_NAME)
+                    .withUrl(SMARTTENDER_HOME_URL)
                     .build();
-
             Initiator initiator = new Initiator.Builder()
                     .withName(dto.getOrganizer().getTitle())
                     .build();
-
-            Tender tender = new Tender.Builder()
+            project.model.response.Tender tender = new project.model.response.Tender.Builder()
                     .withSiteInnerId(dto.getNumber())
                     .withSite(site)
                     .withInitiator(initiator)
@@ -110,7 +104,6 @@ public class SmarttenderService implements IWebService {
                     .withEndTimestamp(LocalDateTime.parse(dto.getTenderingPeriod().getDateEnd()))
                     .withUrl("https://smarttender.biz/komertsiyni-torgy/" + dto.getId() + "/")
                     .build();
-
             tenderList.add(tender);
         }
         return tenderList;

@@ -1,7 +1,6 @@
 package project.model.dto.smarttender;
 
 import com.fasterxml.jackson.annotation.*;
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +29,6 @@ import java.util.Map;
         "TenderingForPercentage"
 })
 public class Tender {
-
     @JsonProperty("Id")
     private Integer id;
     @JsonProperty("Number")
