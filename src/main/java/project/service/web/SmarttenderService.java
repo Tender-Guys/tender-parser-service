@@ -12,16 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SmarttenderService implements IWebService {
+    private final WebClient webClient;
+    private final Duration DURATION_TIMEOUT = Duration.ofSeconds(3);
     private List<Tender> tenderList;
     private List<Tender> onlyNewTenderList;
     private final String SMARTTENDER_NAME = "SmartTender";
     private final String BASE_URL = "https://smarttender.biz";
     private final String PARSING_ENDPOINT = BASE_URL + "/CommercialTrades/GetTenders/";
     private final String TENDER_URL = BASE_URL + "/komertsiyni-torgy/%s/";
-
-
-    private final Duration DURATION_TIMEOUT = Duration.ofSeconds(3);
-    private final WebClient webClient;
     private final String BODY_VALUE =
             "{\n" +
                     "  \"searchParam\": {\n" +
