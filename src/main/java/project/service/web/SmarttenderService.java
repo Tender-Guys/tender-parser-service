@@ -13,8 +13,8 @@ import java.util.List;
 
 public class SmarttenderService implements IWebService {
     private final WebClient webClient;
-    private final Duration DURATION_TIMEOUT = Duration.ofSeconds(3);
-    private List<Tender> tenderList;
+    private final Duration DURATION_TIMEOUT = Duration.ofSeconds(5);
+    private List<Tender> fullTenderList;
     private List<Tender> onlyNewTenderList;
     private final String SMARTTENDER_NAME = "SmartTender";
     private final String BASE_URL = "https://smarttender.biz";
@@ -27,7 +27,7 @@ public class SmarttenderService implements IWebService {
                     "    \"TenderMode\": 1,\n" +
                     "    \"Page\": %d,\n" +
                     "    \"ClassificationGroupId\": null,\n" +
-                    "    \"Sorting\": 2,\n" +
+                    "    \"Sorting\": 3,\n" +
                     "    \"AssignedManagerIds\": [],\n" +
                     "    \"OrganizerIds\": [],\n" +
                     "    \"TenderStatuses\": [],\n" +
@@ -45,7 +45,7 @@ public class SmarttenderService implements IWebService {
                     "}";
 
     public SmarttenderService() {
-        tenderList = new ArrayList<>();
+        fullTenderList = new ArrayList<>();
         onlyNewTenderList = new ArrayList<>();
         webClient = WebClient.builder()
                 .baseUrl(PARSING_ENDPOINT)
@@ -54,15 +54,13 @@ public class SmarttenderService implements IWebService {
 
     @Override
     public void updateTenderList() {
-        List<Tender> tenders = new ArrayList<>();
+        List<Tender> actualTenderListFromSmarttender = new ArrayList<>();
         int page = 1;
-        while (tenders.addAll(getSmarttenderDTOByPage(page++).getTenders()));
-        tenders.removeAll(tenderList);
+        while (actualTenderListFromSmarttender.addAll(getSmarttenderDTOByPage(page++).getTenders()));
         onlyNewTenderList.clear();
-        onlyNewTenderList.addAll(tenders);
-        tenders.addAll(tenderList);
-        tenderList.clear();
-        tenderList.addAll(tenders);
+        onlyNewTenderList.addAll(actualTenderListFromSmarttender);
+        onlyNewTenderList.removeAll(fullTenderList);
+        fullTenderList.addAll(onlyNewTenderList);
     }
 
     private SmarttenderDTO getSmarttenderDTOByPage(int page) {
@@ -77,9 +75,9 @@ public class SmarttenderService implements IWebService {
     }
 
     @Override
-    public List<project.model.response.Tender> getTenderList() {
+    public List<project.model.response.Tender> getFullTenderList() {
         updateTenderList();
-        return mapToTender(tenderList);
+        return mapToTender(fullTenderList);
     }
 
     @Override

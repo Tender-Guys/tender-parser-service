@@ -9,7 +9,7 @@ public class EtenderService implements IWebService {
     }
 
     @Override
-    public List<Tender> getTenderList() {
+    public List<Tender> getFullTenderList() {
         return List.of();
     }
 

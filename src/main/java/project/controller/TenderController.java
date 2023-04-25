@@ -12,9 +12,9 @@ public class TenderController {
         this.service = service;
     }
 
-    @GetMapping("/")
-    public String updateTenderDB() {
-        return service.updateTenderDB();
+    @GetMapping(path = "/")
+    public String getOnlyNewTenderListFromDB() {
+        return service.getOnlyNewTenderListFromDB().toString();
     }
 
     @GetMapping(path = "/{id}")

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.*;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -111,6 +112,18 @@ public class SmarttenderDTO {
     @JsonAnySetter
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SmarttenderDTO that)) return false;
+        return Objects.equals(totalCount, that.totalCount) && Objects.equals(totalCountInAnotherSegment, that.totalCountInAnotherSegment) && Objects.equals(tendersCount, that.tendersCount) && Objects.equals(tenders, that.tenders) && Objects.equals(searchType, that.searchType) && Objects.equals(isSubscribed, that.isSubscribed) && Objects.equals(showIdentificationMessage, that.showIdentificationMessage) && Objects.equals(additionalProperties, that.additionalProperties);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(totalCount, totalCountInAnotherSegment, tendersCount, tenders, searchType, isSubscribed, showIdentificationMessage, additionalProperties);
     }
 
     @Override

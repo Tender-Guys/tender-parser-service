@@ -6,14 +6,12 @@ import project.model.dao.ITenderDAO;
 import project.model.response.Tender;
 import project.service.web.IWebService;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TenderService {
     private final ITenderDAO dao;
     private final String WRONG_PARAMETER_MSG = "Input parameter [%s] is not correct. Enter Integer type (more than 0).";
     private final String REMOVE_ALL_MSG = "DataBase was removed";
-    private final String DB_UPDATED_MSG = "DataBase was updated.";
     private final List<IWebService> webServiceList;
 
     public TenderService() {
@@ -21,13 +19,13 @@ public class TenderService {
         webServiceList = Configuration.getWebServiceList();
     }
 
-    public String updateTenderDB() {
-        List<Tender> tenderList = webServiceList.stream()
+    public List<Tender> getOnlyNewTenderListFromDB() {
+        List<Tender> onlyNewTenderListFromAllSites = webServiceList.stream()
                 .map(IWebService::getOnlyNewTenderList)
                 .flatMap(List::stream)
-                .collect(Collectors.toList());
-        dao.addAll(tenderList);
-        return DB_UPDATED_MSG;
+                .toList();
+        dao.addAll(onlyNewTenderListFromAllSites);
+        return onlyNewTenderListFromAllSites.stream().filter(t -> t.getId() != null).toList();
     }
 
     public String getTenderFromDBByID(String id) {

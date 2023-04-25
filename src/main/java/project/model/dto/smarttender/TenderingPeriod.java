@@ -2,6 +2,8 @@ package project.model.dto.smarttender;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -76,6 +78,18 @@ public class TenderingPeriod {
     @JsonAnySetter
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TenderingPeriod that)) return false;
+        return Objects.equals(dateStart, that.dateStart) && Objects.equals(dateStartTitle, that.dateStartTitle) && Objects.equals(dateEnd, that.dateEnd) && Objects.equals(dateEndTitle, that.dateEndTitle) && Objects.equals(additionalProperties, that.additionalProperties);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dateStart, dateStartTitle, dateEnd, dateEndTitle, additionalProperties);
     }
 
     @Override

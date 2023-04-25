@@ -5,6 +5,6 @@ import java.util.List;
 
 public interface IWebService {
     void updateTenderList();
-    List<Tender> getTenderList();
+    List<Tender> getFullTenderList();
     List<Tender> getOnlyNewTenderList();
 }
