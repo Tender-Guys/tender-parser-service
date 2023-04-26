@@ -53,14 +53,22 @@ public class SmarttenderService implements IWebService {
     }
 
     @Override
-    public void updateTenderList() {
-        List<Tender> actualTenderListFromSmarttender = new ArrayList<>();
+    public void updateTenderLists() {
         int page = 1;
-        while (actualTenderListFromSmarttender.addAll(getSmarttenderDTOByPage(page++).getTenders()));
         onlyNewTenderList.clear();
-        onlyNewTenderList.addAll(actualTenderListFromSmarttender);
+        while (onlyNewTenderList.addAll(getSmarttenderDTOByPage(page++).getTenders()));
         onlyNewTenderList.removeAll(fullTenderList);
         fullTenderList.addAll(onlyNewTenderList);
+    }
+
+    @Override
+    public List<project.model.response.Tender> getFullTenderList() {
+        return mapToTender(fullTenderList);
+    }
+
+    @Override
+    public List<project.model.response.Tender> getOnlyNewTenderList() {
+        return mapToTender(onlyNewTenderList);
     }
 
     private SmarttenderDTO getSmarttenderDTOByPage(int page) {
@@ -72,18 +80,6 @@ public class SmarttenderService implements IWebService {
                 .retrieve()
                 .bodyToMono(SmarttenderDTO.class)
                 .block(DURATION_TIMEOUT);
-    }
-
-    @Override
-    public List<project.model.response.Tender> getFullTenderList() {
-        updateTenderList();
-        return mapToTender(fullTenderList);
-    }
-
-    @Override
-    public List<project.model.response.Tender> getOnlyNewTenderList() {
-        updateTenderList();
-        return mapToTender(onlyNewTenderList);
     }
 
     private List<project.model.response.Tender> mapToTender(List<Tender> tenders) {

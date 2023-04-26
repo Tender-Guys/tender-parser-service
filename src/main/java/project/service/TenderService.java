@@ -1,5 +1,6 @@
 package project.service;
 
+import com.mysql.cj.exceptions.WrongArgumentException;
 import org.springframework.stereotype.Service;
 import project.configuration.Configuration;
 import project.model.dao.ITenderDAO;
@@ -10,7 +11,6 @@ import java.util.List;
 @Service
 public class TenderService {
     private final ITenderDAO dao;
-    private final String WRONG_PARAMETER_MSG = "Input parameter [%s] is not correct. Enter Integer type (more than 0).";
     private final String REMOVE_ALL_MSG = "DataBase was removed";
     private final List<IWebService> webServiceList;
 
@@ -19,29 +19,32 @@ public class TenderService {
         webServiceList = Configuration.getWebServiceList();
     }
 
+    public void updateTenderListInDB() {
+        for (IWebService webService : webServiceList) {
+            webService.updateTenderLists();
+            dao.addAll(webService.getOnlyNewTenderList());
+        }
+    }
+
     public List<Tender> getOnlyNewTenderListFromDB() {
-        List<Tender> onlyNewTenderListFromAllSites = webServiceList.stream()
+        return webServiceList.stream()
                 .map(IWebService::getOnlyNewTenderList)
                 .flatMap(List::stream)
+                .map(dao::findTender)
+                .filter(tender -> tender.getId() != null)
                 .toList();
-        dao.addAll(onlyNewTenderListFromAllSites);
-        return onlyNewTenderListFromAllSites.stream().filter(t -> t.getId() != null).toList();
     }
 
     public String getTenderFromDBByID(String id) {
-        return isCorrect(id)
-                ? dao.getByID(Integer.parseInt(id.strip())).toString()
-                : String.format(WRONG_PARAMETER_MSG, id);
+        return dao.getByID(mapIdToIntegerOrThrowException(id)).toString();
     }
 
-    public String getAllTendersFromDB() {
-        return dao.getAll().toString();
+    public List<Tender> getFullTenderListFromDB() {
+        return dao.getAll();
     }
 
     public String removeTenderFromDBByID(String id) {
-        return isCorrect(id)
-                ? dao.removeById(Integer.parseInt(id.strip())).toString()
-                : String.format(WRONG_PARAMETER_MSG, id);
+        return dao.removeById(mapIdToIntegerOrThrowException(id)).toString();
     }
 
     public String removeAllTendersFromDB() {
@@ -49,7 +52,10 @@ public class TenderService {
         return REMOVE_ALL_MSG;
     }
 
-    private boolean isCorrect(String id) {
-        return id.strip().matches("\\d+");
+    private Integer mapIdToIntegerOrThrowException(String id) {
+        if (!id.strip().matches("\\d+")) {
+            throw new WrongArgumentException("ID should be any natural number {1, 2, 3, ... n}");
+        }
+        return Integer.parseInt(id.strip());
     }
 }

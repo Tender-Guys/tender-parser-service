@@ -40,6 +40,21 @@ public class HTenderDAO implements ITenderDAO {
     }
 
     @Override
+    public Tender findTender(Tender tender) {
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            Tender existingTender = (Tender) session.byNaturalId(Tender.class)
+                    .using("url", tender.getUrl())
+                    .load();
+            if (existingTender != null) {
+                tender = existingTender;
+            }
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return tender;
+    }
+
+    @Override
     public Boolean add(Tender tender) {
         Boolean isAdded = false;
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {

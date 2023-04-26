@@ -5,7 +5,7 @@ import java.util.List;
 
 public class EtenderService implements IWebService {
     @Override
-    public void updateTenderList() {
+    public void updateTenderLists() {
     }
 
     @Override

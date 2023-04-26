@@ -4,7 +4,7 @@ import project.model.response.Tender;
 import java.util.List;
 
 public interface IWebService {
-    void updateTenderList();
+    void updateTenderLists();
     List<Tender> getFullTenderList();
     List<Tender> getOnlyNewTenderList();
 }
