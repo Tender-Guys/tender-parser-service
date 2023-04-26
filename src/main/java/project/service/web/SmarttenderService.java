@@ -68,7 +68,9 @@ public class SmarttenderService implements IWebService {
 
     @Override
     public List<project.model.response.Tender> getOnlyNewTenderList() {
-        return mapToTender(onlyNewTenderList);
+        return onlyNewTenderList.containsAll(fullTenderList) // they are equals only on first time run
+                ? List.of()
+                : mapToTender(onlyNewTenderList);
     }
 
     private SmarttenderDTO getSmarttenderDTOByPage(int page) {

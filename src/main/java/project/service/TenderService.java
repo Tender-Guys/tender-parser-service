@@ -1,6 +1,7 @@
 package project.service;
 
 import com.mysql.cj.exceptions.WrongArgumentException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.configuration.Configuration;
 import project.model.dao.ITenderDAO;
@@ -14,8 +15,9 @@ public class TenderService {
     private final String REMOVE_ALL_MSG = "DataBase was removed";
     private final List<IWebService> webServiceList;
 
-    public TenderService() {
-        dao = Configuration.getDaoImplementation();
+    @Autowired
+    public TenderService(ITenderDAO dao) {
+        this.dao = dao;
         webServiceList = Configuration.getWebServiceList();
     }
 
