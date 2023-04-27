@@ -5,11 +5,11 @@ import java.util.List;
 
 public class EtenderService implements IWebService {
     @Override
-    public void updateTenderList() {
+    public void updateTenderLists() {
     }
 
     @Override
-    public List<Tender> getTenderList() {
+    public List<Tender> getFullTenderList() {
         return List.of();
     }
 

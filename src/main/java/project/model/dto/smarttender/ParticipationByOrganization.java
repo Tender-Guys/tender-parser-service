@@ -3,6 +3,7 @@ package project.model.dto.smarttender;
 import com.fasterxml.jackson.annotation.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -110,6 +111,18 @@ public class ParticipationByOrganization {
     @JsonAnySetter
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ParticipationByOrganization that)) return false;
+        return Objects.equals(statusByOrganization, that.statusByOrganization) && Objects.equals(isInvalidBid, that.isInvalidBid) && Objects.equals(notesType, that.notesType) && Objects.equals(userRemark, that.userRemark) && Objects.equals(statusByUser, that.statusByUser) && Objects.equals(assignedByTender, that.assignedByTender) && Objects.equals(isFavorite, that.isFavorite) && Objects.equals(additionalProperties, that.additionalProperties);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(statusByOrganization, isInvalidBid, notesType, userRemark, statusByUser, assignedByTender, isFavorite, additionalProperties);
     }
 
     @Override

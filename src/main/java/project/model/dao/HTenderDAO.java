@@ -4,6 +4,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.springframework.stereotype.Component;
 import project.model.response.Site;
 import project.model.response.Initiator;
 import project.model.response.Tender;
@@ -11,6 +12,7 @@ import project.util.HibernateSessionFactoryUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class HTenderDAO implements ITenderDAO {
 
     @Override
@@ -37,6 +39,21 @@ public class HTenderDAO implements ITenderDAO {
             e.printStackTrace();
         }
         return tenderList;
+    }
+
+    @Override
+    public Tender findTender(Tender tender) {
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            Tender existingTender = (Tender) session.byNaturalId(Tender.class)
+                    .using("url", tender.getUrl())
+                    .load();
+            if (existingTender != null) {
+                tender = existingTender;
+            }
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return tender;
     }
 
     @Override

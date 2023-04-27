@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.*;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -283,29 +284,26 @@ public class Tender {
     }
 
     @Override
-    public String toString() {
-        return "Tender{" +
-                "id=" + id +
-                ", number='" + number + '\'' +
-                ", subject='" + subject + '\'' +
-                ", tenderStatus=" + tenderStatus +
-                ", initialRate=" + initialRate +
-                ", organizer=" + organizer +
-                ", classification=" + classification +
-                ", tenderingPeriod=" + tenderingPeriod +
-                ", enquiryPeriod=" + enquiryPeriod +
-                ", terminalStatusDate='" + terminalStatusDate + '\'' +
-                ", auctionStart='" + auctionStart + '\'' +
-                ", biddingTypeInfo=" + biddingTypeInfo +
-                ", statusInfo=" + statusInfo +
-                ", isLocked=" + isLocked +
-                ", viewCount=" + viewCount +
-                ", participationByOrganization=" + participationByOrganization +
-                ", highlights=" + highlights +
-                ", fileElasticHighlights=" + fileElasticHighlights +
-                ", prediction=" + prediction +
-                ", tenderingForPercentage=" + tenderingForPercentage +
-                ", additionalProperties=" + additionalProperties +
-                '}';
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Tender tender)) return false;
+
+        if (!id.equals(tender.id)) return false;
+        if (!number.equals(tender.number)) return false;
+        if (!subject.equals(tender.subject)) return false;
+        if (!tenderStatus.equals(tender.tenderStatus)) return false;
+        if (!organizer.equals(tender.organizer)) return false;
+        return classification.equals(tender.classification);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + number.hashCode();
+        result = 31 * result + subject.hashCode();
+        result = 31 * result + tenderStatus.hashCode();
+        result = 31 * result + organizer.hashCode();
+        result = 31 * result + classification.hashCode();
+        return result;
     }
 }
