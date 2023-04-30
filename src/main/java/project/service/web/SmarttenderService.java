@@ -11,6 +11,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Mykola Lisnyi
+ */
 public class SmarttenderService implements IWebService {
     private final WebClient webClient;
     private final Duration DURATION_TIMEOUT = Duration.ofSeconds(5);

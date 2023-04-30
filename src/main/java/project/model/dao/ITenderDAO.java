@@ -1,9 +1,11 @@
 package project.model.dao;
 
 import project.model.response.Tender;
-
 import java.util.List;
 
+/**
+ * @author Mykola Lisnyi
+ */
 public interface ITenderDAO {
     Tender getByID(Integer id);
     List<Tender> getAll();

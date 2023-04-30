@@ -9,6 +9,9 @@ import project.model.response.Initiator;
 import project.model.response.Site;
 import project.model.response.Tender;
 
+/**
+ * @author Mykola Lisnyi
+ */
 public class HibernateSessionFactoryUtil {
     private static SessionFactory sessionFactory;
 

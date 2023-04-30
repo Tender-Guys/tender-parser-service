@@ -3,6 +3,9 @@ package project.service.web;
 import project.model.response.Tender;
 import java.util.List;
 
+/**
+ * @author Mykola Lisnyi
+ */
 public class EtenderService implements IWebService {
     @Override
     public void updateTenderLists() {

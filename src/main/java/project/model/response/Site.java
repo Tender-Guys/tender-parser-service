@@ -7,6 +7,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * @author Mykola Lisnyi
+ */
 @Entity
 @Table(name = "tender_sites")
 public class Site implements Serializable {

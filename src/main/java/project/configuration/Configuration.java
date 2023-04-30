@@ -6,6 +6,9 @@ import project.service.web.SmarttenderService;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Mykola Lisnyi
+ */
 public abstract class Configuration {
 
     private Configuration() {

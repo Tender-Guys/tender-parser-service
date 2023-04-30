@@ -6,6 +6,9 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * @author Mykola Lisnyi
+ */
 @Entity
 @Table(name = "tenders")
 public class Tender implements Serializable {

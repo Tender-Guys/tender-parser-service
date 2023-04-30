@@ -3,6 +3,9 @@ package project.controller;
 import org.springframework.web.bind.annotation.*;
 import project.service.TenderService;
 
+/**
+ * @author Mykola Lisnyi
+ */
 @RestController
 public class TenderController {
 

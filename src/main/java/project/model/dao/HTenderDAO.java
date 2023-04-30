@@ -12,6 +12,9 @@ import project.util.HibernateSessionFactoryUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Mykola Lisnyi
+ */
 @Component
 public class HTenderDAO implements ITenderDAO {
 

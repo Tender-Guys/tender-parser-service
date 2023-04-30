@@ -9,6 +9,9 @@ import project.model.response.Tender;
 import project.service.web.IWebService;
 import java.util.List;
 
+/**
+ * @author Mykola Lisnyi
+ */
 @Service
 public class TenderService {
     private final ITenderDAO dao;
