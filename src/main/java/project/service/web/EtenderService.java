@@ -1,5 +1,6 @@
 package project.service.web;
 
+import project.model.dao.ITenderDAO;
 import project.model.response.Tender;
 import java.util.List;
 
@@ -9,6 +10,10 @@ import java.util.List;
 public class EtenderService implements IWebService {
     @Override
     public void updateTenderLists() {
+    }
+
+    @Override
+    public void initializeBy(List<project.model.response.Tender> tenderList) {
     }
 
     @Override

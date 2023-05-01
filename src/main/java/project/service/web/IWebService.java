@@ -10,4 +10,5 @@ public interface IWebService {
     void updateTenderLists();
     List<Tender> getFullTenderList();
     List<Tender> getOnlyNewTenderList();
+    void initializeBy(List<Tender> tenderList);
 }

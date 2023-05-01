@@ -1,7 +1,6 @@
 package project.service;
 
 import com.mysql.cj.exceptions.WrongArgumentException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.configuration.Configuration;
 import project.model.dao.ITenderDAO;
@@ -18,10 +17,15 @@ public class TenderService {
     private final String REMOVE_ALL_MSG = "DataBase was removed";
     private final List<IWebService> webServiceList;
 
-    @Autowired
-    public TenderService(ITenderDAO dao) {
-        this.dao = dao;
+    public TenderService() {
+        dao = Configuration.getDAOImplement();
         webServiceList = Configuration.getWebServiceList();
+        initializeWebServiceList();
+    }
+
+    private void initializeWebServiceList() {
+        List<Tender> tenderList = dao.getAll();
+        webServiceList.forEach(service -> service.initializeBy(tenderList));
     }
 
     public void updateTenderListInDB() {
@@ -36,7 +40,6 @@ public class TenderService {
                 .map(IWebService::getOnlyNewTenderList)
                 .flatMap(List::stream)
                 .map(dao::findTender)
-                .filter(tender -> tender.getId() != null)
                 .toList();
     }
 

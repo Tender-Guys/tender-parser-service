@@ -56,6 +56,18 @@ public class SmarttenderService implements IWebService {
     }
 
     @Override
+    public void initializeBy(List<project.model.response.Tender> tenderList) {
+        updateTenderLists();
+        List<String> siteInnerIdList = tenderList.stream()
+                .map(tender -> tender.getSiteInnerId())
+                .toList();
+        fullTenderList.removeAll(fullTenderList.stream()
+                .filter(tender -> !siteInnerIdList.contains(tender.getNumber()))
+                .toList());
+        onlyNewTenderList.clear();
+    }
+
+    @Override
     public void updateTenderLists() {
         int page = 1;
         onlyNewTenderList.clear();
@@ -66,14 +78,12 @@ public class SmarttenderService implements IWebService {
 
     @Override
     public List<project.model.response.Tender> getFullTenderList() {
-        return mapToTender(fullTenderList);
+        return mapDTOToDAO(fullTenderList);
     }
 
     @Override
     public List<project.model.response.Tender> getOnlyNewTenderList() {
-        return onlyNewTenderList.containsAll(fullTenderList) // they are equals only on first time run
-                ? List.of()
-                : mapToTender(onlyNewTenderList);
+        return mapDTOToDAO(onlyNewTenderList);
     }
 
     private SmarttenderDTO getSmarttenderDTOByPage(int page) {
@@ -87,7 +97,7 @@ public class SmarttenderService implements IWebService {
                 .block(DURATION_TIMEOUT);
     }
 
-    private List<project.model.response.Tender> mapToTender(List<Tender> tenders) {
+    private List<project.model.response.Tender> mapDTOToDAO(List<Tender> tenders) {
         List<project.model.response.Tender> tenderList = new ArrayList<>();
         for (Tender dto : tenders) {
             Site site = new Site.Builder()

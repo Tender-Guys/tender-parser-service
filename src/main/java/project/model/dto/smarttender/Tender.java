@@ -306,4 +306,31 @@ public class Tender {
         result = 31 * result + classification.hashCode();
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Tender{" +
+                "id=" + id +
+                ", number='" + number + '\'' +
+                ", subject='" + subject + '\'' +
+                ", tenderStatus=" + tenderStatus +
+                ", initialRate=" + initialRate +
+                ", organizer=" + organizer +
+                ", classification=" + classification +
+                ", tenderingPeriod=" + tenderingPeriod +
+                ", enquiryPeriod=" + enquiryPeriod +
+                ", terminalStatusDate='" + terminalStatusDate + '\'' +
+                ", auctionStart='" + auctionStart + '\'' +
+                ", biddingTypeInfo=" + biddingTypeInfo +
+                ", statusInfo=" + statusInfo +
+                ", isLocked=" + isLocked +
+                ", viewCount=" + viewCount +
+                ", participationByOrganization=" + participationByOrganization +
+                ", highlights=" + highlights +
+                ", fileElasticHighlights=" + fileElasticHighlights +
+                ", prediction=" + prediction +
+                ", tenderingForPercentage=" + tenderingForPercentage +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }
